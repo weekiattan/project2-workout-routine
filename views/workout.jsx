@@ -4,7 +4,7 @@ class workout extends React.Component {
     render() {
         // console.log(this.props.workouts)
         let workoutData = this.props.workouts.map((workout)=>{
-            return <a href="/google.com">{workout.bodypart}</a>
+            return <a href="/workout/chest">{workout.bodypart}</a>
         });
         return(
             <html>

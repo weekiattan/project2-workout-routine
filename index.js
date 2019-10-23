@@ -124,17 +124,11 @@ app.post('/login',(request,response) => {
 });
  //********************************************************************************************************************
  app.get('/workout',(request,response) => {
-    //  let requestBodypart = request.body.bodypart;
-    //  let requestPassword = request.body.password;
-
      const queryString = "SELECT * from workout_types";
      pool.query(queryString,(err,result) => {
          if(err) {
              response.send('query error')
          } else if (result.rows.length > 0) {
-                // let hashedRequestPassword = sha256(requestPassword + SALT);
-                // console.log(hashedRequestPassword);
-                // if(hashedRequestPassword === result.rows[0].password) {
                     let user_id = result.rows[0].id
                     let hashedCookie = sha256(SALT + user_id);
 
@@ -147,12 +141,33 @@ app.post('/login',(request,response) => {
                     }
 
                     response.render('workout', data)
-                // } else {
-                //     response.send('wrong password la')
-                // }      
-     };
- });
-});
+                };
+            });
+        });
+//********************************************************************************************************************
+
+app.get('/workout/chest',(request,response) =>{
+    const queryString = "SELECT * from exercises WHERE workout_types_id =1";
+    pool.query(queryString,(err,result) => {
+        if(err) {
+            response.send('query error')
+        } else if (result.rows.length > 0) {
+                   let user_id = result.rows[0].id
+                   let hashedCookie = sha256(SALT + user_id);
+
+                   response.cookie('user_id', user_id);
+                   response.cookie('hasLoggedIn',hashedCookie);
+                   
+                   let data = {
+                       
+                       exercises: result.rows
+                   }
+
+                   response.render('chest', data)
+                };
+            });
+        });
+
 
  //********************************************************************************************************************
 app.get('/special', (request,response) => {
