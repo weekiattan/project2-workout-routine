@@ -11,6 +11,8 @@ class chest extends React.Component {
             const sets = x.sets;
             const id = x.id
             const delete_url = "/exercise/"+id+"?_method=delete"
+            const edit_url = "/exercise/"+id+"/edit"
+            
           
             // console.log(url)
             return <div className="card">
@@ -20,6 +22,7 @@ class chest extends React.Component {
                     <iframe src={url}width="320" height="240" controls autoplay>
                     </iframe>
                     <form action={delete_url} method="POST"><button type="submit">Delete Exercise</button></form>
+                    <form action={edit_url} method="GET"><button type="submit">Edit Sets and Reps</button></form>
 
                 </div>
             </div>
@@ -45,16 +48,6 @@ class chest extends React.Component {
                     <div>
                         <a href={url}>
                         <button>Insert more exercise</button>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/workout/chest/edit">
-                        <button>edit</button>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="/login">
-                        <button>delete</button>
                         </a>
                     </div>
                     </div>
