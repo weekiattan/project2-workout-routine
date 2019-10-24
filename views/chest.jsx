@@ -1,4 +1,5 @@
 const React = require('react');
+const Layout = require('./layout');
 
 class chest extends React.Component {
     render() {
@@ -8,6 +9,9 @@ class chest extends React.Component {
             const url = x.url;
             const reps = x.reps;
             const sets = x.sets;
+            const id = x.id
+            const delete_url = "/exercise/"+id+"?_method=delete"
+          
             // console.log(url)
             return <div className="card">
                 <div className="card-body">
@@ -15,6 +19,8 @@ class chest extends React.Component {
                     <p className="card-text">{sets} sets of {reps} reps</p>
                     <iframe src={url}width="320" height="240" controls autoplay>
                     </iframe>
+                    <form action={delete_url} method="POST"><button type="submit">Delete Exercise</button></form>
+
                 </div>
             </div>
         });
@@ -26,6 +32,7 @@ class chest extends React.Component {
         
 
         return(
+            <Layout>
             <html>
              <body>
                 <div>
@@ -53,6 +60,8 @@ class chest extends React.Component {
                     </div>
              </body>
             </html>
+            </Layout>
+            
             )}
     }
 

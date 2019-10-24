@@ -237,6 +237,7 @@ app.post('/exercise',(request,response) => {
             } else {
                 console.log('query result: result');
             response.send(results.rows);
+            
             }
         });
     };
@@ -268,10 +269,19 @@ app.get('/workout/chest/edit',(request,response) => {
             });
         });
 //******************************************************************************************************************************************************        
+app.delete('/exercise/:id',(request,response)=>{
+    
+    let id = parseInt(request.params.id);
+    let inputValues = [id];
+    let queryText = "DELETE from exercises WHERE id = ($1) RETURNING *";
+
+    pool.query(queryText, inputValues, (err,results)=>{
+        response.redirect('/workout/1')
+    })
+});
 
 
-
- //********************************************************************************************************************
+ //*********************************************************************************************************************************************************
 app.get('/special', (request,response) => {
     let user_id = request.cookie['user_id'];
     let hashedValue = sha256(user_id + SALT);

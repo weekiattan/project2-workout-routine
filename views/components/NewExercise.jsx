@@ -1,10 +1,12 @@
 const React = require("react");
 
+
 class NewExercise extends React.Component {
   render() {
     const {type} = this.props;
     return (
-      <div>
+      
+        <div>
         <form action={`/${type.toLowerCase()}`} method="post">
           <div>
             <label htmlFor="name">name: </label>
@@ -29,6 +31,8 @@ class NewExercise extends React.Component {
           <input type="submit" value='submit' />
         </form>
       </div>
+      
+      
     );
   }
 }

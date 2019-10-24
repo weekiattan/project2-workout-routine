@@ -1,9 +1,11 @@
 const React = require("react");
+const Layout = require('./layout');
 
 class Home extends React.Component {
     render() {
       return (
-        <div>
+        <Layout>
+          <div>
           <div>
             <a href="/register">
               <button>Register</button>
@@ -14,7 +16,9 @@ class Home extends React.Component {
               <button>Login</button>
             </a>
           </div>
-        </div>
+        </div>  
+        </Layout>
+        
       );
     }
   }

@@ -1,10 +1,12 @@
 const React = require("react");
 
+
 class UserCredentials extends React.Component {
   render() {
     const {type} = this.props;
     return (
-      <div>
+         <div>
+           {this.props.children}
         <form action={`/${type.toLowerCase()}`} method="post">
           <div>
             <label htmlFor="name">User name: </label>
@@ -17,6 +19,7 @@ class UserCredentials extends React.Component {
           <input type="submit" value={type} />
         </form>
       </div>
+     
     );
   }
 }

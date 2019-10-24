@@ -1,7 +1,10 @@
 const React = require('react');
+const Layout = require('./layout');
 
 class workout extends React.Component {
     render() {
+
+
         console.log(this.props.workouts)
         
         let workoutData = this.props.workouts.map((workout)=>{
@@ -9,18 +12,25 @@ class workout extends React.Component {
             return <a href={url}>{workout.bodypart}</a>
         });
         return(
-            <html>
+            <Layout>
+                <html>
              <body>
                 <div>
-                    <h1>Choose your bodypart to workout!</h1>
-
+                    <h1>Choose your BodyPart to workout!</h1>
+                    
+                    <div className="card">
                     {workoutData}
+                    </div>
+
+                    
 
                   
                      
                 </div>
              </body>
             </html>
+            </Layout>
+            
             )}
     }
 
