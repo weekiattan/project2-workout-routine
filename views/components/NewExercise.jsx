@@ -11,6 +11,10 @@ class NewExercise extends React.Component {
             <input type="text" name="name"/>
           </div>
           <div>
+            <label htmlFor="workout_types_id"></label>
+            <input type="hidden" name="workout_types_id" value="1"/>
+          </div>
+          <div>
             <label htmlFor="url">url: </label>
             <input type="url" name="url"/>
           </div>

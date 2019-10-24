@@ -69,22 +69,33 @@ app.get('/register',(request,response) => {
 });
 //********************************************************************************************************************
 
-app.post('/register',(request,response) => {
-    let hashedPassword = sha256(request.body.password + SALT);
+app.post('/register',async (request,response) => {
+    try{
+        let hashedPassword = sha256(request.body.password + SALT);
 
-   const queryString= 'INSERT INTO users (name,password) VALUES ($1,$2) RETURNING *';
-   const values = [request.body.name,hashedPassword];
+        const queryString= 'INSERT INTO users (name,password) VALUES ($1,$2) RETURNING *';
+        const values = [request.body.name,hashedPassword];
+        let newUser = await pool.query(queryString,values);
 
-   pool.query(queryString,values, (err,result)=>{
-       if (err){
-           console.log(err);
-           response.send('query error')
-       }else {
-           response.send(result.rows);
-       }
-   });
+        console.log(newUser);
+        const newUserId = newUser.rows[0].id
+        const queryString2 = "SELECT * from standard";
+        let allStandard = await pool.query(queryString2);
+
+        allStandard.rows.forEach(async (x)=>{
+            let queryText = 'INSERT INTO exercises(name,workout_types_id,user_id,url,reps,sets) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+            let arr = [x.name,x.workout_types_id,newUserId,x.url,x.reps,x.sets];
+            let result = await pool.query(queryText,arr);
+        })
+        response.send("DONEEEE")
+
+
+    }catch(error){
+        console.log(error)
+    }
+    
 });
-//********************************************************************************************************************
+//*************************************************************************************************************************************************
 app.get('/login',(request,response) => {
     response.render('login');
 });
@@ -92,22 +103,23 @@ app.get('/login',(request,response) => {
 app.post('/login',(request,response) => {
     let requestUsername = request.body.name;
     let requestPassword = request.body.password;
-
     const queryString = "SELECT * from users WHERE name='"+requestUsername+"'";
 
     pool.query(queryString, (err,result) =>{
         if(err) {
             response.send('query error')
         } else {
+            console.log("xxxxx");
             console.log(result.rows);
-
+                    
             if (result.rows.length > 0) {
                 let hashedRequestPassword = sha256(requestPassword + SALT);
                 console.log(hashedRequestPassword);
                 if(hashedRequestPassword === result.rows[0].password) {
                     let user_id = result.rows[0].id
+                    console.log(user_id)
                     let hashedCookie = sha256(SALT + user_id);
-
+                    
                     response.cookie('user_id', user_id);
                     response.cookie('hasLoggedIn',hashedCookie);
 
@@ -122,19 +134,15 @@ app.post('/login',(request,response) => {
     }
 });
 });
- //********************************************************************************************************************
+
+ //***************************************************************************************************************************************************
  app.get('/workout',(request,response) => {
      const queryString = "SELECT * from workout_types";
      pool.query(queryString,(err,result) => {
          if(err) {
              response.send('query error')
          } else if (result.rows.length > 0) {
-                    let user_id = result.rows[0].id
-                    let hashedCookie = sha256(SALT + user_id);
-
-                    response.cookie('user_id', user_id);
-                    response.cookie('hasLoggedIn',hashedCookie);
-                    
+                  
                     let data = {
                         
                         workouts: result.rows
@@ -144,21 +152,23 @@ app.post('/login',(request,response) => {
                 };
             });
         });
+
+    
 //********************************************************************************************************************
 
 app.get('/workout/:id',(request,response) =>{
+     let user_id = request.cookies['user_id'];
     let id = parseInt(request.params.id);
-    let inputValues = [id];
-    const queryString = "SELECT * from exercises WHERE workout_types_id =($1)";
+    let inputValues = [id,user_id];
+    const queryString = "SELECT * from exercises WHERE workout_types_id = ($1) AND user_id = ($2)";
+    // let id = parseInt(request.params.id);
+    // let inputValues = [id];
+    // const queryString = "SELECT * from exercises WHERE workout_types_id =($1)";
     pool.query(queryString,inputValues,(err,result) => {
         if(err) {
             response.send('query error')
         } else if (result.rows.length > 0) {
-                   let user_id = result.rows[0].id
-                   let hashedCookie = sha256(SALT + user_id);
 
-                   response.cookie('user_id', user_id);
-                   response.cookie('hasLoggedIn',hashedCookie);
                    
                    let data = {
                        
@@ -170,22 +180,18 @@ app.get('/workout/:id',(request,response) =>{
                 };
             });
         });
-//********************************************************************************************************************
+//******************************************************************************************************************************************************
 app.get('/workout/:id/new',(request,response) =>{
+   
     let id = parseInt(request.params.id);
     let inputValues = [id];
-    const queryString = "SELECT * from exercises WHERE workout_types_id = ($1)";
+    const queryString = "SELECT * from exercises WHERE workout_types_id =($1)";
     pool.query(queryString,inputValues,(err,result) => {
         if(err) {
             response.send('query error')
 
         } else {
             if (result.rows.length > 0) {
-                let user_id = result.rows[0].id
-                let hashedCookie = sha256(SALT + user_id);
-
-                response.cookie('user_id', user_id);
-                response.cookie('hasLoggedIn',hashedCookie);
                 
                 let data = {
                     
@@ -202,7 +208,7 @@ app.get('/workout/:id/new',(request,response) =>{
         
 });
 
-
+//******************************************************************************************************************************************************
 app.post('/exercise',(request,response) => {
 
     let user_id = request.cookies['user_id'];
@@ -214,7 +220,7 @@ app.post('/exercise',(request,response) => {
 
 
         let name =(request.body.name);
-        let workoutId= parseInt(request.params.id);
+        let workoutId=(request.body.workout_types_id);
         let userId = request.cookies['user_id'];
         let url =(request.body.url);
         let reps =(request.body.reps);
@@ -224,12 +230,13 @@ app.post('/exercise',(request,response) => {
         let queryText = 'INSERT INTO exercises(name,workout_types_id,user_id,url,reps,sets) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
 
         pool.query(queryText, inputValues, (err, results)=>{
+
             if (err) {
                 console.log('query error:',err.stack);
             response.send('query error');
             } else {
                 console.log('query result: result');
-            response.send(result.rows);
+            response.send(results.rows);
             }
         });
     };
@@ -260,6 +267,7 @@ app.get('/workout/chest/edit',(request,response) => {
                 };
             });
         });
+//******************************************************************************************************************************************************        
 
 
 
@@ -274,7 +282,7 @@ app.get('/special', (request,response) => {
         response.send('SEND HELP ');
     }
 });
-
+//******************************************************************************************************************************************************
 
 
 
