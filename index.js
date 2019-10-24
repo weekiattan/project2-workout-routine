@@ -146,7 +146,99 @@ app.post('/login',(request,response) => {
         });
 //********************************************************************************************************************
 
-app.get('/workout/chest',(request,response) =>{
+app.get('/workout/:id',(request,response) =>{
+    let id = parseInt(request.params.id);
+    let inputValues = [id];
+    const queryString = "SELECT * from exercises WHERE workout_types_id =($1)";
+    pool.query(queryString,inputValues,(err,result) => {
+        if(err) {
+            response.send('query error')
+        } else if (result.rows.length > 0) {
+                   let user_id = result.rows[0].id
+                   let hashedCookie = sha256(SALT + user_id);
+
+                   response.cookie('user_id', user_id);
+                   response.cookie('hasLoggedIn',hashedCookie);
+                   
+                   let data = {
+                       
+                       exercises: result.rows,
+                       id : parseInt(request.params.id),
+                    }
+
+                   response.render('chest', data)
+                };
+            });
+        });
+//********************************************************************************************************************
+app.get('/workout/:id/new',(request,response) =>{
+    let id = parseInt(request.params.id);
+    let inputValues = [id];
+    const queryString = "SELECT * from exercises WHERE workout_types_id = ($1)";
+    pool.query(queryString,inputValues,(err,result) => {
+        if(err) {
+            response.send('query error')
+
+        } else {
+            if (result.rows.length > 0) {
+                let user_id = result.rows[0].id
+                let hashedCookie = sha256(SALT + user_id);
+
+                response.cookie('user_id', user_id);
+                response.cookie('hasLoggedIn',hashedCookie);
+                
+                let data = {
+                    
+                    exercises: result.rows
+                }
+
+                
+             response.render('newExerciseForm')
+             } else {
+                 response.send('query ok but no result')
+             }
+        }
+    });
+        
+});
+
+
+app.post('/exercise',(request,response) => {
+
+    let user_id = request.cookies['user_id'];
+    let username = request.cookies['username'];
+    let hashedValue = sha256( SALT + user_id );
+
+    // if there is a cookie that says hasLoggedIn yes, let them access this page
+    if( request.cookies['hasLoggedIn'] === hashedValue ){
+
+
+        let name =(request.body.name);
+        let workoutId= parseInt(request.params.id);
+        let userId = request.cookies['user_id'];
+        let url =(request.body.url);
+        let reps =(request.body.reps);
+        let sets =(request.body.sets);
+
+        let inputValues = [name,workoutId,userId,url,reps,sets];
+        let queryText = 'INSERT INTO exercises(name,workout_types_id,user_id,url,reps,sets) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+
+        pool.query(queryText, inputValues, (err, results)=>{
+            if (err) {
+                console.log('query error:',err.stack);
+            response.send('query error');
+            } else {
+                console.log('query result: result');
+            response.send(result.rows);
+            }
+        });
+    };
+});
+
+
+
+//********************************************************************************************************************
+app.get('/workout/chest/edit',(request,response) => {
     const queryString = "SELECT * from exercises WHERE workout_types_id =1";
     pool.query(queryString,(err,result) => {
         if(err) {
@@ -163,10 +255,12 @@ app.get('/workout/chest',(request,response) =>{
                        exercises: result.rows
                    }
 
-                   response.render('chest', data)
+                //    
+                response.send('hello')
                 };
             });
         });
+
 
 
  //********************************************************************************************************************

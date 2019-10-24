@@ -1,6 +1,6 @@
 const React = require('react');
 
-class chest extends React.Component {
+class editedChest extends React.Component {
     render() {
         // console.log(this.props.workouts)
         let exercisesData = this.props.exercises.map((x)=>{
@@ -8,7 +8,7 @@ class chest extends React.Component {
             const url = x.url;
             const reps = x.reps;
             const sets = x.sets;
-            // console.log(url)
+            console.log(url)
             return <div className="card">
                 <div className="card-body">
                     <h5 className='card-name'>{name}</h5>
@@ -18,12 +18,6 @@ class chest extends React.Component {
                 </div>
             </div>
         });
-
-        let id = this.props.id;
-        let url = `/workout/${id}/new`
-        console.log(url,"zzzzz");
-        console.log(id,"hello")
-        
 
         return(
             <html>
@@ -36,7 +30,7 @@ class chest extends React.Component {
                     </div>
                     <div>
                     <div>
-                        <a href={url}>
+                        <a href="/workout/chest/new">
                         <button>Insert more exercise</button>
                         </a>
                     </div>
@@ -58,4 +52,4 @@ class chest extends React.Component {
 
 
 
-module.exports = chest;
+module.exports = editedChest;
