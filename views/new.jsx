@@ -8,7 +8,11 @@ class NewExerciseForm extends React.Component {
       <Layout>
         <div>
         <h1>New Exercise</h1>
-        <NewExercise type="exercise" />
+        <NewExercise 
+          // exercises={this.props.exercises} 
+          id={this.props.id} 
+          type={this.props.type} 
+        />
       </div>
       </Layout>
       

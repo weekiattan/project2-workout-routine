@@ -1,7 +1,7 @@
 const React = require('react');
 const Layout = require('./layout');
 
-class chest extends React.Component {
+class workout extends React.Component {
     render() {
         // console.log(this.props.workouts)
         let exercisesData = this.props.exercises.map((x)=>{
@@ -39,7 +39,7 @@ class chest extends React.Component {
             <html>
              <body>
                 <div>
-                    <h1>Chest workout!</h1>
+                    <h1>workout!</h1>
 
                     {exercisesData}
 
@@ -60,4 +60,4 @@ class chest extends React.Component {
 
 
 
-module.exports = chest;
+module.exports = workout;

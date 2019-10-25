@@ -3,7 +3,12 @@ const React = require("react");
 
 class NewExercise extends React.Component {
   render() {
-    const {type} = this.props;
+    const {type, id} = this.props;
+
+    console.log('woohoo!!!!!!!')
+    console.log(type)
+    console.log(id)
+    
     return (
       
         <div>
@@ -14,7 +19,7 @@ class NewExercise extends React.Component {
           </div>
           <div>
             <label htmlFor="workout_types_id"></label>
-            <input type="hidden" name="workout_types_id" value="1"/>
+            <input type="hidden" name="workout_types_id" value={id}/>
           </div>
           <div>
             <label htmlFor="url">url: </label>

@@ -87,7 +87,7 @@ app.post('/register',async (request,response) => {
             let arr = [x.name,x.workout_types_id,newUserId,x.url,x.reps,x.sets];
             let result = await pool.query(queryText,arr);
         })
-        response.send("DONEEEE")
+        response.redirect('/workout')
 
 
     }catch(error){
@@ -176,7 +176,7 @@ app.get('/workout/:id',(request,response) =>{
                        id : parseInt(request.params.id),
                     }
 
-                   response.render('chest', data)
+                   response.render('workingout', data)
                 };
             });
         });
@@ -184,27 +184,28 @@ app.get('/workout/:id',(request,response) =>{
 app.get('/workout/:id/new',(request,response) =>{
    
     let id = parseInt(request.params.id);
-    let inputValues = [id];
-    const queryString = "SELECT * from exercises WHERE workout_types_id =($1)";
-    pool.query(queryString,inputValues,(err,result) => {
-        if(err) {
-            response.send('query error')
+    // let inputValues = [id];
+    // const queryString = "SELECT * from exercises WHERE workout_types_id =($1)";
+    // pool.query(queryString,inputValues,(err,result) => {
+    //     if(err) {
+    //         response.send('query error')
 
-        } else {
-            if (result.rows.length > 0) {
+    //     } else {
+    //         if (result.rows.length > 0) {
                 
                 let data = {
                     
-                    exercises: result.rows
+                    // exercises: result.rows,
+                    id : parseInt(request.params.id),
+                    type: 'exercise'
                 }
 
-                
-             response.render('newExerciseForm')
-             } else {
-                 response.send('query ok but no result')
-             }
-        }
-    });
+             response.render('new', data)
+    //          } else {
+    //              response.send('query ok but no result')
+    //          }
+    //     }
+    // });
         
 });
 
@@ -236,38 +237,13 @@ app.post('/exercise',(request,response) => {
             response.send('query error');
             } else {
                 console.log('query result: result');
-            response.redirect('/workout/1');
+            response.redirect('/workout');
             
             }
         });
     };
 });
 
-
-
-//********************************************************************************************************************
-app.get('/workout/chest/edit',(request,response) => {
-    const queryString = "SELECT * from exercises WHERE workout_types_id =1";
-    pool.query(queryString,(err,result) => {
-        if(err) {
-            response.send('query error')
-        } else if (result.rows.length > 0) {
-                   let user_id = result.rows[0].id
-                   let hashedCookie = sha256(SALT + user_id);
-
-                   response.cookie('user_id', user_id);
-                   response.cookie('hasLoggedIn',hashedCookie);
-                   
-                   let data = {
-                       
-                       exercises: result.rows
-                   }
-
-                //    
-                response.send('hello')
-                };
-            });
-        });
 //******************************************************************************************************************************************************  
 app.get('/exercise/:id/edit',(request,response)=>{
     
@@ -288,11 +264,11 @@ app.put('/exercise/:id',(request,response)=>{
     let reps =request.body.reps;
     let sets =request.body.sets;
     let id = parseInt(request.params.id);
-    let inputValues = [reps,sets,id];
+    let inputValues = [sets,reps,id];
     
     let queryText = "UPDATE exercises SET sets=($1), reps=($2)WHERE id=($3) RETURNING *";
     pool.query(queryText,inputValues,(err,result)=>{
-        response.redirect('/workout/1');
+        response.redirect('/workout');
     });
 });
 
