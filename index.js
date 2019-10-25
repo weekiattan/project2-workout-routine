@@ -12,7 +12,7 @@ const cookieParser = require('cookie-parser')
 // Hash Implementation
 var sha256 = require('js-sha256');
 // var SALT = process.env.SALT;
-var SALT = SALTY;
+var SALT = "SALTY";
 
 // Initialise postgres client
 const url = require('url');
