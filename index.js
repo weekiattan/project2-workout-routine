@@ -11,7 +11,8 @@ const cookieParser = require('cookie-parser')
 
 // Hash Implementation
 var sha256 = require('js-sha256');
-var SALT = "SALTY"
+// var SALT = process.env.SALT;
+var SALT = SALTY;
 
 // Initialise postgres client
 const configs = {
@@ -316,7 +317,9 @@ app.get('/special', (request,response) => {
  * Listen to requests on port 3000
  * ===================================
  */
-const server = app.listen(3000, () => console.log('~~~ Tuning in to the waves of port 3000 ~~~'));
+const PORT = process.env.PORT || 3000;
+
+const server = app.listen(PORT, () => console.log('~~~ Tuning in to the waves of port '+PORT+' ~~~'));
 
 let onClose = function(){
 

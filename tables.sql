@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS exercises (
 id SERIAL PRIMARY KEY,
 name TEXT,
 workout_types_id INTEGER,
-user_id TEXT,
+user_id INTEGER,
 url  TEXT,
 reps INTEGER,
 sets INTEGER
