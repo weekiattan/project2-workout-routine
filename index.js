@@ -274,16 +274,60 @@ app.post('/exercise',(request,response) => {
 app.get('/exercise/:id/edit',(request,response)=>{
     
     let id = parseInt(request.params.id);
-    let data = {};
-    data.id = id
-    response.render('edit', data)
-    // // let inputValues = [id];
-    // let queryText = "SELECT * from exercises WHERE id = ($1) RETURNING *";
+    // let data = {};
 
-    // pool.query(queryText, inputValues, (err,results)=>{
-      
-    // })
+    // data.id = id;
+    let inputValues = [id];
+   
+
+    let queryText = "SELECT * from exercises WHERE id = ($1)";
+
+    pool.query(queryText, inputValues, (err,results)=>{
+        console.log(inputValues)
+        
+       
+        if(err) {
+            console.log('query error:',err.stack);
+            response.send('query error')
+        } else if (results.rows.length > 0) {
+            let exerciseData = 
+                {
+                exercises: results.rows,
+                id: parseInt(request.params.id)
+            }
+        
+            console.log("666666666666666")
+            console.log(exerciseData);
+            console.log("666666666666666")
+            
+            response.render('edit',exerciseData)
+        }
+    })
 });
+
+// app.get('/exercise/:id/edit',(request,response)=>{
+    
+//     let id = parseInt(request.params.id);
+//     let data = {};
+
+//     data.id = id;
+   
+//     // let inputValues = [id];
+//     let queryText = "SELECT * from exercises WHERE id = ($1) RETURNING *";
+
+//     pool.query(queryText, data, (err,results)=>{
+//         console.log(data)
+       
+        
+//     });
+            
+//             response.render('edit',data)
+        
+//     })
+
+
+
+
 
 app.put('/exercise/:id',(request,response)=>{
     console.log(request.body);

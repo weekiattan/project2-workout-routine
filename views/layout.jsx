@@ -18,6 +18,9 @@ class Layout extends React.Component {
                             </button>
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="nav mr-auto mt-lg-0">
+                                <li className="nav-item">
+                                        <a className="nav-link" href="http://localhost:3000/workout">Home</a>
+                                    </li>
                                 
                                 </ul>
                                 <form className="form-inline my-2 my-lg-0" method="GET" action={"/login"}>
