@@ -9,3 +9,13 @@ INSERT INTO standard(name,workout_types_id,url,reps,sets) VALUES('Concentration 
 INSERT INTO standard(name,workout_types_id,url,reps,sets) VALUES('Dips - Triceps Version','2','https://www.youtube.com/embed/h09JoShrExQ','15','2');
 INSERT INTO standard(name,workout_types_id,url,reps,sets) VALUES('EZ-Bar Skullcrusher','2','https://www.youtube.com/embed/Eizj7tuWMvw','10','4');
 INSERT INTO standard(name,workout_types_id,url,reps,sets) VALUES('Cable One Arm Tricep Extension','2','https://www.youtube.com/embed/YfDxCvoadsM','12','3');
+
+
+INSERT INTO standard(name,workout_types_id,url,reps,sets) VALUES('Barbell Full Squat','3','https://www.youtube.com/embed/tVB1q8zkP3o','8','5');
+INSERT INTO standard(name,workout_types_id,url,reps,sets) VALUES('Leg Press ','3','https://www.youtube.com/embed/3R0SOJ3alTA','10','4');
+INSERT INTO standard(name,workout_types_id,url,reps,sets) VALUES('Leg extension','3','https://www.youtube.com/embed/yR_LqZYSIgM','20','3');
+INSERT INTO standard(name,workout_types_id,url,reps,sets) VALUES('Hamstring Curls','3','https://www.youtube.com/embed/F488k67BTNo','20','3');
+INSERT INTO standard(name,workout_types_id,url,reps,sets) VALUES('Standing Barbell Calf Raise','3','https://www.youtube.com/embed/3UWi44yN-wM','10','3');
+
+
+

@@ -13,7 +13,7 @@ class workout extends React.Component {
             return (
                 <div className='card'>
                     <img src={workout.image} height="200" width="300"/>
-                    <a href={url}><button type="button" class="btn btn-success btn-block">{workout.bodypart}</button></a>
+                    <a href={url}><button type="button" class="btn btn-success btn-block btn-lg">{workout.bodypart}</button></a>
                     
                 </div>
 
@@ -26,7 +26,7 @@ class workout extends React.Component {
                 <html>
              <body>
                 <div>
-                    <h1>Choose your Body Part to workout!</h1>
+                <h2 class="display-2 text-center">Choose your Body Part to workout!</h2>
 
                     <div className="row justify-content-center">
                         <div className = 'card'>
