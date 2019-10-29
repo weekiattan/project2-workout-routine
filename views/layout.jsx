@@ -6,20 +6,20 @@ class Layout extends React.Component {
            <html>
                 <head>
                     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossOrigin="anonymous"></link>
-                    <title>Workout</title>
+                    <title>Workout Planner</title>
                 </head>
                 <body>
                     <div className="container">
 
                         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                            <span className="navbar-brand">Workout</span>
+                            <span className="navbar-brand">Workout Planner</span>
                             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="nav mr-auto mt-lg-0">
-                                <li className="nav-item">
-                                        <a className="nav-link" href="http://localhost:3000/workout">Home</a>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="http://localhost:3000/workout"><button type="button" class="btn btn-outline-success">Home</button></a>
                                     </li>
                                 
                                 </ul>
@@ -28,6 +28,9 @@ class Layout extends React.Component {
                                 </form>
                                 <form className="form-inline my-2 my-lg-0" method="GET" action={"/register"}>
                                     <input className="btn btn-outline-success my-2 my-sm-0" type="submit" value="Register"/>
+                                </form>
+                                <form className="form-inline my-2 my-lg-0" method="GET" action={"/"}>
+                                    <input className="btn btn-outline-success my-2 my-sm-0" type="submit" value="Log out"/>
                                 </form>
                             </div>
                         </nav>

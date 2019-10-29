@@ -23,7 +23,7 @@ class Edit extends React.Component {
 
        });
 
-       let id = this.props.id;
+
     
         return (
             <Layout>

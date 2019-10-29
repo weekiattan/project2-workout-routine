@@ -11,8 +11,12 @@ class workout extends React.Component {
         let workoutData = this.props.workouts.map((workout)=>{
             let url = "/workout/"+workout.id
             return (
-            <a href={url}>{workout.bodypart}</a>
- 
+                <div className='card'>
+                    <img src={workout.image} height="200" width="300"/>
+                    <a href={url}><button type="button" class="btn btn-success btn-block">{workout.bodypart}</button></a>
+                    
+                </div>
+
                 )
                     
            
@@ -22,12 +26,15 @@ class workout extends React.Component {
                 <html>
              <body>
                 <div>
-                    <h1>Choose your BodyPart to workout!</h1>
+                    <h1>Choose your Body Part to workout!</h1>
 
                     <div className="row justify-content-center">
-                        
-                            {workoutData}
-                                     
+                        <div className = 'card'>
+                            
+                        {workoutData}
+                        </div>
+                           
+                
                      </div>
                 </div>
              </body>

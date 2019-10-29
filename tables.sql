@@ -25,5 +25,6 @@ sets INTEGER
 
 CREATE TABLE IF NOT EXISTS workout_types (
 id SERIAL PRIMARY KEY,
-bodypart TEXT
+bodypart TEXT,
+image TEXT
 );
