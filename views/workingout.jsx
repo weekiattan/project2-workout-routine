@@ -48,11 +48,11 @@ class workout extends React.Component {
 
                     </div>
                     <div className="row justify-content-center">
-                    {/* <div>
+                    <div>
                         <a href={url2}>
                         <button>see other users's exercises</button>
                         </a>
-                    </div> */}
+                    </div>
                     <div>
                         <a href={url}>
                         <button>Insert more exercise</button>

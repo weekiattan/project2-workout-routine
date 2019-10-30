@@ -29,6 +29,7 @@ class workout extends React.Component {
 
         let id = this.props.id;
         let url = `/workout/${id}/new`
+        let url2 = `/workout/${id}/new`
     
         console.log(url,"zzzzz");
         console.log(id,"hello")

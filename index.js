@@ -238,29 +238,29 @@ app.get('/workout/:id/new',(request,response) =>{
 });
  //********************************************************************************************************************
 
-//  app.get('/workout/:id/otherusersworkout',(request,response) =>{
-//     // let id = parseInt(request.params.id);
-//     let user_id = request.cookies['user_id'];
-//     let inputValues=[user_id];
-//     console.log("0000000000000000000")
-//     console.log(inputValues);
-//     console.log("0000000000000000000")
+ app.get('/workout/:id/otherusersworkout',(request,response) =>{
+    // let id = parseInt(request.params.id);
+    let user_id = request.cookies['user_id'];
+    let inputValues=[user_id];
+    console.log("0000000000000000000")
+    console.log(inputValues);
+    console.log("0000000000000000000")
 
-//     const queryString= "SELECT * FROM exercises WHERE NOT name IN(SELECT name FROM exercises WHERE user_id = ($1)";
+    const queryString= "SELECT * FROM exercises WHERE NOT name IN(SELECT name FROM exercises WHERE user_id = ($1))";
     
 
-//     pool.query(queryString,inputValues,(err,result)=>{
-//         if(err) {
-//             console.log(err)
-//         } else if (result.rows.length > 0) {
-//             let data = {
-//                 exercises: result.rows,
+    pool.query(queryString,inputValues,(err,result)=>{
+        if(err) {
+            console.log(err)
+        } else if (result.rows.length > 0) {
+            let data = {
+                exercises: result.rows,
                 
-//             }
-//             response.render('otherUsers',data)
-//         }
-//     });
-// });
+            }
+            response.render('otherUsers',data)
+        }
+    });
+});
 
 //******************************************************************************************************************************************************
 app.post('/exercise',(request,response) => {
