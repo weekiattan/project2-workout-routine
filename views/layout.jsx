@@ -19,7 +19,7 @@ class Layout extends React.Component {
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="nav mr-auto mt-lg-0">
                                     <li className="nav-item">
-                                        <a className="nav-link" href="http://localhost:3000/workout"><button type="button" class="btn btn-outline-success">Home</button></a>
+                                        <a className="nav-link" href="/workout"><button type="button" class="btn btn-outline-success">Home</button></a>
                                     </li>
                                 
                                 </ul>
